@@ -7,9 +7,9 @@ WIDTH = 600
 
 def formatResponse(weather):
     try:
-        name = weather['name']
-        desc = weather['weather'][0]['description']
-        temp = weather['main']['temp']
+        name = weather['location']['name']
+        desc = weather['current']['weather_descriptions'][0]
+        temp = weather['current']['temperature']
         final_str = 'City: %s \nConditions: %s \nTempature: %s' % (name, desc, temp)
     
     except:
@@ -17,10 +17,10 @@ def formatResponse(weather):
 
     return final_str
 
-def getWeather(city):
-    weather_key = 'APIkey'
-    url = 'https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}'
-    params = {'APPID': weather_key, 'q': city, 'units': 'imperial'}
+def getWeather(city_name):
+    API_key = '[INSERT KEY HERE]' # https://weatherstack.com/
+    url = f"http://api.weatherstack.com/current?access_key={API_key}&query={city_name}"
+    params = {'API_key': API_key, 'city_name': city_name}
     response = requests.get(url, params=params)
     weather = response.json()
 
